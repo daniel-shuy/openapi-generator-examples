@@ -108,7 +108,6 @@ paths:
         - name: status
           in: query
           description: Status values that need to be considered for filter
-          explode: true
           schema:
             type: array
             items:
@@ -141,7 +140,6 @@ paths:
         - name: tags
           in: query
           description: Tags to filter by
-          explode: true
           schema:
             type: array
             items:
