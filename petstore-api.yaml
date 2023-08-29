@@ -139,6 +139,7 @@ paths:
         - pet
       summary: Finds Pets by status
       operationId: findPetsByStatus
+      x-spring-paginated: true
       parameters:
         - name: status
           in: query
@@ -149,20 +150,19 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/PetStatus'
                 - default: available
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/sortParam'
       responses:
         '200':
           description: successful operation
           content:
             application/xml:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
+                $ref: '#/components/schemas/PetPage'
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
+                $ref: '#/components/schemas/PetPage'
         '400':
           description: Invalid status value
   /pet/findByTags:
@@ -171,6 +171,7 @@ paths:
         - pet
       summary: Finds Pets by tags
       operationId: findPetsByTags
+      x-spring-paginated: true
       parameters:
         - name: tags
           in: query
@@ -179,20 +180,19 @@ paths:
             type: array
             items:
               type: string
+        - $ref: '#/components/parameters/pageParam'
+        - $ref: '#/components/parameters/sizeParam'
+        - $ref: '#/components/parameters/sortParam'
       responses:
         '200':
           description: successful operation
           content:
             application/xml:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
+                $ref: '#/components/schemas/PetPage'
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Pet'
+                $ref: '#/components/schemas/PetPage'
         '400':
           description: Invalid tag value
   '/pet/{petId}':
@@ -405,6 +405,30 @@ externalDocs:
   description: Find out more about Swagger
   url: 'http://swagger.io'
 components:
+  parameters:
+    pageParam:
+      in: query
+      name: page
+      schema:
+        type: integer
+      description: Zero-based page index (0..N)
+    sizeParam:
+      in: query
+      name: size
+      schema:
+        type: integer
+      description: The size of the page to be returned
+    sortParam:
+      in: query
+      name: sort
+      schema:
+        type: array
+        items:
+          type: string
+      description: >-
+        Sorting criteria in the format: property,(asc|desc).
+        Default sort order is ascending.
+        Multiple sort criteria are supported.
   schemas:
     Order:
       x-swagger-router-model: io.swagger.petstore.model.Order
@@ -569,6 +593,69 @@ components:
       xml:
         name: '##default'
       type: object
+    PaginationResponse:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+          default: 0
+        totalPages:
+          type: integer
+          default: 0
+        sort:
+          $ref: '#/components/schemas/Sort'
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        numberOfElements:
+          type: integer
+        size:
+          type: integer
+        empty:
+          type: boolean
+        content:
+          type: array
+          items: { }
+    Sort:
+      type: object
+      format: sort
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    Pageable:
+      type: object
+      format: pageable
+      properties:
+        page:
+          type: integer
+          minimum: 0
+        size:
+          type: integer
+          minimum: 1
+        sort:
+          type: array
+          items:
+            type: string
+    PetPage:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/PaginationResponse'
+        - type: object
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/Pet'
   requestBodies:
     Pet:
       content:
