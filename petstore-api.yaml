@@ -98,6 +98,41 @@ paths:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Pet'
+    patch:
+      tags:
+        - pet
+      summary: Patch an existing pet
+      description: Patch an existing pet by Id
+      operationId: patchPet
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '405':
+          description: Validation exception
+      requestBody:
+        description: Patch an existent pet in the store
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchPet'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/PatchPet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchPet'
   /pet/findByStatus:
     get:
       tags:
@@ -498,6 +533,23 @@ components:
       xml:
         name: pet
       type: object
+    PatchPet:
+      allOf:
+        - $ref: '#/components/schemas/Pet'
+      properties:
+        tags:
+          nullable: true
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Tag'
+            xml:
+              name: tag
+        status:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/PetStatus'
     PetStatus:
       type: string
       description: pet status in the store
