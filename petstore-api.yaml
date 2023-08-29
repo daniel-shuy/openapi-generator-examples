@@ -111,12 +111,11 @@ paths:
           description: Status values that need to be considered for filter
           explode: true
           schema:
-            type: string
-            enum:
-              - available
-              - pending
-              - sold
-            default: available
+            type: array
+            items:
+              allOf:
+                - $ref: '#/components/schemas/PetStatus'
+                - default: available
       responses:
         '200':
           description: successful operation
@@ -219,7 +218,7 @@ paths:
           in: query
           description: Status of pet that needs to be updated
           schema:
-            type: string
+            $ref: '#/components/schemas/PetStatus'
       responses:
         '405':
           description: Invalid input
@@ -501,15 +500,17 @@ components:
             xml:
               name: tag
         status:
-          type: string
-          description: pet status in the store
-          enum:
-            - available
-            - pending
-            - sold
+          $ref: '#/components/schemas/PetStatus'
       xml:
         name: pet
       type: object
+    PetStatus:
+      type: string
+      description: pet status in the store
+      enum:
+        - available
+        - pending
+        - sold
     ApiResponse:
       properties:
         code:
