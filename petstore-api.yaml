@@ -109,7 +109,6 @@ paths:
         - name: status
           in: query
           description: Status values that need to be considered for filter
-          required: false
           explode: true
           schema:
             type: string
@@ -147,7 +146,6 @@ paths:
         - name: tags
           in: query
           description: Tags to filter by
-          required: false
           explode: true
           schema:
             type: array
@@ -260,7 +258,6 @@ paths:
         - name: additionalMetadata
           in: query
           description: Additional Metadata
-          required: false
           schema:
             type: string
       responses:
