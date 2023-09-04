@@ -60,9 +60,6 @@ paths:
           application/xml:
             schema:
               $ref: '#/components/schemas/Pet'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Pet'
     put:
       tags:
         - pet
@@ -95,9 +92,6 @@ paths:
           application/xml:
             schema:
               $ref: '#/components/schemas/Pet'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Pet'
     patch:
       tags:
         - pet
@@ -128,9 +122,6 @@ paths:
             schema:
               $ref: '#/components/schemas/PatchPet'
           application/xml:
-            schema:
-              $ref: '#/components/schemas/PatchPet'
-          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/PatchPet'
   /pet/findByStatus:
@@ -342,9 +333,6 @@ paths:
             schema:
               $ref: '#/components/schemas/Order'
           application/xml:
-            schema:
-              $ref: '#/components/schemas/Order'
-          application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/Order'
   '/store/order/{orderId}':
