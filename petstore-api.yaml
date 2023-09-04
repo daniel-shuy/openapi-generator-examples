@@ -537,9 +537,10 @@ components:
           xml:
             wrapped: true
           items:
-            $ref: '#/components/schemas/Tag'
             xml:
               name: tag
+            allOf:
+              - $ref: '#/components/schemas/Tag'
         status:
           $ref: '#/components/schemas/PetStatus'
       xml:
@@ -555,9 +556,10 @@ components:
           xml:
             wrapped: true
           items:
-            $ref: '#/components/schemas/Tag'
             xml:
               name: tag
+            allOf:
+              - $ref: '#/components/schemas/Tag'
         status:
           nullable: true
           allOf:
