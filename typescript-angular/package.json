@@ -1,0 +1,39 @@
+{
+  "name": "openapi-generator-examples-typescript-angular",
+  "version": "0.0.1",
+  "scripts": {
+    "ng": "ng",
+    "prebuild": "openapi-generator-cli generate -i ../petstore-api.yaml -g typescript-angular -o projects/petstore-api-client/src/lib --additional-properties fileNaming=kebab-case,modelFileSuffix=.dto,modelSuffix=Dto,stringEnums=true,withInterfaces=true",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^16.2.0",
+    "@angular/common": "^16.2.0",
+    "@angular/compiler": "^16.2.0",
+    "@angular/core": "^16.2.0",
+    "@angular/forms": "^16.2.0",
+    "@angular/platform-browser": "^16.2.0",
+    "@angular/platform-browser-dynamic": "^16.2.0",
+    "@angular/router": "^16.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.13.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^16.2.1",
+    "@angular/cli": "~16.2.1",
+    "@angular/compiler-cli": "^16.2.0",
+    "@openapitools/openapi-generator-cli": "^2.7.0",
+    "@types/jasmine": "~4.3.0",
+    "jasmine-core": "~4.6.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "ng-packagr": "^16.2.0",
+    "typescript": "~5.1.3"
+  }
+}
