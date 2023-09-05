@@ -40,16 +40,9 @@ paths:
       operationId: addPet
       responses:
         '200':
-          description: Successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'
+          $ref: '#/components/responses/PetSuccessResponse'
         '405':
-          description: Invalid input
+          $ref: '#/components/responses/InvalidInputResponse'
       requestBody:
         description: Create a new pet in the store
         required: true
@@ -68,20 +61,13 @@ paths:
       operationId: updatePet
       responses:
         '200':
-          description: Successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'
+          $ref: '#/components/responses/PetSuccessResponse'
         '400':
-          description: Invalid ID supplied
+          $ref: '#/components/responses/InvalidIdResponse'
         '404':
-          description: Pet not found
+          $ref: '#/components/responses/PetNotFoundResponse'
         '405':
-          description: Validation exception
+          $ref: '#/components/responses/ValidationExceptionResponse'
       requestBody:
         description: Update an existent pet in the store
         required: true
@@ -100,20 +86,13 @@ paths:
       operationId: patchPet
       responses:
         '200':
-          description: Successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'
+          $ref: '#/components/responses/PetSuccessResponse'
         '400':
-          description: Invalid ID supplied
+          $ref: '#/components/responses/InvalidIdResponse'
         '404':
-          description: Pet not found
+          $ref: '#/components/responses/PetNotFoundResponse'
         '405':
-          description: Validation exception
+          $ref: '#/components/responses/ValidationExceptionResponse'
       requestBody:
         description: Patch an existent pet in the store
         required: true
@@ -146,16 +125,9 @@ paths:
         - $ref: '#/components/parameters/sortParam'
       responses:
         '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/PetPage'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PetPage'
+          $ref: '#/components/responses/PetPageSuccessResponse'
         '400':
-          description: Invalid status value
+          $ref: '#/components/responses/InvalidStatusResponse'
   /pet/findByTags:
     get:
       tags:
@@ -176,16 +148,9 @@ paths:
         - $ref: '#/components/parameters/sortParam'
       responses:
         '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/PetPage'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PetPage'
+          $ref: '#/components/responses/PetPageSuccessResponse'
         '400':
-          description: Invalid tag value
+          $ref: '#/components/responses/InvalidTagResponse'
   '/pet/{petId}':
     get:
       tags:
@@ -203,18 +168,11 @@ paths:
             format: int64
       responses:
         '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'
+          $ref: '#/components/responses/PetSuccessResponse'
         '400':
-          description: Invalid ID supplied
+          $ref: '#/components/responses/InvalidIdResponse'
         '404':
-          description: Pet not found
+          $ref: '#/components/responses/PetNotFoundResponse'
     post:
       tags:
         - pet
@@ -241,7 +199,7 @@ paths:
             $ref: '#/components/schemas/PetStatus'
       responses:
         '405':
-          description: Invalid input
+          $ref: '#/components/responses/InvalidInputResponse'
     delete:
       tags:
         - pet
@@ -258,7 +216,7 @@ paths:
             format: int64
       responses:
         '400':
-          description: Invalid pet value
+          $ref: '#/components/responses/InvalidPetSuccessResponse'
   '/pet/{petId}/uploadImage':
     post:
       tags:
@@ -281,11 +239,7 @@ paths:
             type: string
       responses:
         '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ApiResponse'
+          $ref: '#/components/responses/UploadResponse'
       requestBody:
         content:
           application/octet-stream:
@@ -302,14 +256,7 @@ paths:
       x-swagger-router-controller: OrderController
       responses:
         '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
+          $ref: '#/components/responses/InventorySuccessResponse'
   /store/order:
     post:
       tags:
@@ -320,13 +267,9 @@ paths:
       x-swagger-router-controller: OrderController
       responses:
         '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
+          $ref: '#/components/responses/OrderSuccessResponse'
         '405':
-          description: Invalid input
+          $ref: '#/components/responses/InvalidInputResponse'
       requestBody:
         content:
           application/json:
@@ -355,18 +298,11 @@ paths:
             format: int64
       responses:
         '200':
-          description: successful operation
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Order'
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
+          $ref: '#/components/responses/OrderSuccessResponse'
         '400':
-          description: Invalid ID supplied
+          $ref: '#/components/responses/InvalidIdResponse'
         '404':
-          description: Order not found
+          $ref: '#/components/responses/OrderNotFoundResponse'
     delete:
       tags:
         - store
@@ -386,9 +322,9 @@ paths:
             format: int64
       responses:
         '400':
-          description: Invalid ID supplied
+          $ref: '#/components/responses/InvalidIdResponse'
         '404':
-          description: Order not found
+          $ref: '#/components/responses/OrderNotFoundResponse'
 externalDocs:
   description: Find out more about Swagger
   url: 'https://swagger.io'
@@ -417,6 +353,65 @@ components:
         Sorting criteria in the format: property,(asc|desc).
         Default sort order is ascending.
         Multiple sort criteria are supported.
+  responses:
+    InvalidIdResponse:
+      description: Invalid ID supplied
+    InvalidInputResponse:
+      description: Invalid input
+    InvalidPetSuccessResponse:
+      description: Invalid pet value
+    InvalidStatusResponse:
+      description: Invalid status value
+    InvalidTagResponse:
+      description: Invalid tag value
+    InventorySuccessResponse:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    OrderNotFoundResponse:
+      description: Order not found
+    OrderSuccessResponse:
+      description: successful operation
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Order'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Order'
+    PetNotFoundResponse:
+      description: Pet not found
+    PetPageSuccessResponse:
+      description: successful operation
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/PetPage'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PetPage'
+    PetSuccessResponse:
+      description: Successful operation
+      content:
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Pet'
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+    UploadResponse:
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiResponse'
+    ValidationExceptionResponse:
+      description: Validation exception
   schemas:
     Order:
       x-swagger-router-model: io.swagger.petstore.model.Order
